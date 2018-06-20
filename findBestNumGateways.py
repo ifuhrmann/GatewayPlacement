@@ -106,7 +106,7 @@ for k in range(1,maxK):
         
     
     
-    pl.plot(M[0],M[1],".k")
+    pl.plot(M[0],M[1],"ok")
     for i in range(0,k):
         pl.plot(S[i][0],S[i][1],".")
     pl.show()

@@ -58,7 +58,7 @@ while(flag==0): #initialize gateway positions flag should re-generate stuff if t
     flag=1
 
 
-pl.plot(M[0],M[1],".k")
+pl.plot(M[0],M[1],"ok")
 for i in range(0,k):
     pl.plot(S[i][0],S[i][1],".")
 pl.show()
@@ -69,7 +69,7 @@ for i in range(0,k):
     SNew.append( [ [],[] ] )
 
 flag=0
-for i in range(0,200):
+for i in range(0,400):
     flag=1
     for i in range(0,k):
         mx=0
@@ -112,7 +112,7 @@ for i in range(0,200):
     
 
 
-pl.plot(M[0],M[1],".k")
+pl.plot(M[0],M[1],"ok")
 for i in range(0,k):
     pl.plot(S[i][0],S[i][1],".")
 pl.show()

@@ -29,18 +29,23 @@ AvgX=[ax]
 AvgY=[ay]
 
 D=[]
-maxK=11
+maxK=16
 
 for k in range(1,maxK):
     S=[]
     M=[]
     
-    for i in range(0,k):
-        S.append( [ [],[] ] )
+    for i in range(0,k): #puts intiial medians on random nodes (uniquely) 
+        S.append( [ [],[] ] ) #this menas that the set of things closest to it will never be empty
         M.append([])
         M.append([])
-        M[0].append(random.random()*100)
-        M[1].append(random.random()*100)
+        x=random.randint(0,n-1)
+        y=random.randint(0,n-1)
+        while(x in M[0] and y in M[1]):
+            x=random.randint(0,n)
+            y=random.randint(0,n)
+        M[0].append(X[0][x])
+        M[1].append(X[1][y])
         
     flag=0
     while(flag==0): #initialize gateway positions flag should re-generate stuff if there's an empty set (doesn't do that now)

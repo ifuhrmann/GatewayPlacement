@@ -11,34 +11,14 @@ import math
 import random 
 import matplotlib 
 
-X=[[],[]]
-n=150
-for x in range(0,n):
-    X[0].append(random.random()*100)
-    X[1].append(random.random()*100)
 
-ax=0
-ay=0
-for i in range(0,len(X[0])):
-   ax+=X[0][i]
-   ay+=X[1][i]
-ax/=len(X[0])
-ay/=len(X[1])
 
-AvgX=[ax]
-AvgY=[ay]
-
-D=[]
-maxK=16
-
-for k in range(1,maxK):
+def kMeansPartition(X,D,k):
     S=[]
-    M=[]
+    M=[[],[]]
     
     for i in range(0,k): #puts intiial medians on random nodes (uniquely) 
         S.append( [ [],[] ] ) #this menas that the set of things closest to it will never be empty
-        M.append([])
-        M.append([])
         x=random.randint(0,n-1)
         y=random.randint(0,n-1)
         while(x in M[0] and y in M[1]):
@@ -68,8 +48,9 @@ for k in range(1,maxK):
         SNew.append( [ [],[] ] )
     
     flag=0
-    for i in range(0,300):
-        flag=1
+    c=0
+    while flag==0:
+        c+=1
         for i in range(0,k):
             mx=0
             my=0
@@ -80,7 +61,7 @@ for k in range(1,maxK):
             my/=len(S[i][0])
             M[0][i]=mx
             M[1][i]=my
-        
+        flag=1
         for i in range(0,n):
             dMin=10**50
             jMin=0
@@ -91,7 +72,10 @@ for k in range(1,maxK):
                     jMin=j
             SNew[jMin][0].append( X[0][i] )
             SNew[jMin][1].append( X[1][i] )
-    
+            if(X[0][i] not in S[jMin][0] and X[1][i] not in S[jMin][1]):
+                flag=0
+        if(c==300):
+            flag=1
         #here if the set is the same as the old set stop iterating
         
         for i in range(0,k):
@@ -110,7 +94,7 @@ for k in range(1,maxK):
                 del(SNew[i][1][0])
         
     
-    
+    print(c)
     pl.plot(M[0],M[1],"ok")
     for i in range(0,k):
         pl.plot(S[i][0],S[i][1],".")
@@ -121,4 +105,29 @@ for k in range(1,maxK):
            d+=math.sqrt( (S[i][0][j]-M[0][i])**2 + (S[i][1][j]-M[1][i])**2  )
     D.append(d)
 
+
+
+
+X=[[],[]]
+n=200
+for x in range(0,n):
+    X[0].append(random.random()*100)
+    X[1].append(random.random()*100)
+
+ax=0
+ay=0
+for i in range(0,len(X[0])):
+   ax+=X[0][i]
+   ay+=X[1][i]
+ax/=len(X[0])
+ay/=len(X[1])
+
+AvgX=[ax]
+AvgY=[ay]
+
+D=[]
+maxK=16
+
+for k in range(1,maxK):
+    kMeansPartition(X,D,k)
 pl.plot(range(1,maxK),D)
